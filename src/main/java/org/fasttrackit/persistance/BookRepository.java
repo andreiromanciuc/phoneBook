@@ -29,7 +29,7 @@ public class BookRepository {
     }
 
     public void updateName(long id, UpdateName updateName) throws SQLException, IOException {
-        String slq = "UPDATE book SET phone_number = ?, address = ? WHERE id = ?";
+        String slq = "UPDATE book SET phone_numbers = ?, address = ? WHERE id = ?";
 
         try (Connection connection = DatabaseConfiguration.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(slq);) {
@@ -51,7 +51,7 @@ public class BookRepository {
     }
 
     public List<Book> getNames() throws IOException, SQLException {
-        String sql = "SELECT id, name, phone-numbers, address FROM book";
+        String sql = "SELECT id, name, phone_numbers, address FROM book";
 
         try (Connection connection = DatabaseConfiguration.getConnection();
              Statement statement = connection.createStatement();
@@ -63,7 +63,7 @@ public class BookRepository {
                 Book book = new Book();
                 book.setId(resultSet.getLong("id"));
                 book.setName(resultSet.getString("name"));
-                book.setPhone(resultSet.getString("phone_number"));
+                book.setPhone(resultSet.getString("phone_numbers"));
                 book.setAddress(resultSet.getString("address"));
                 names.add(book);
             }
