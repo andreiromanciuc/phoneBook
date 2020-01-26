@@ -15,10 +15,6 @@ public class App
 {
     public static void main( String[] args ) throws IOException, SQLException {
 
-        BookRepository bookRepository = new BookRepository();
-
-        List<Book> getNames = bookRepository.getNames();
-        System.out.println(getNames);
 
 
     }

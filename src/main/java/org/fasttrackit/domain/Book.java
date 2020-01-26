@@ -3,6 +3,7 @@ package org.fasttrackit.domain;
 public class Book {
     private long id;
     private String name;
+    private String surname;
     private String phone;
     private String address;
 
@@ -20,6 +21,14 @@ public class Book {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getPhone() {
@@ -43,6 +52,7 @@ public class Book {
         return "Book{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
                 '}';

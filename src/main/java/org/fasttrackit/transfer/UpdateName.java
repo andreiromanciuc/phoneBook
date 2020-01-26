@@ -2,6 +2,7 @@ package org.fasttrackit.transfer;
 
 public class UpdateName {
     private String name;
+    private String surname;
     private String phone;
     private String address;
 
@@ -11,6 +12,14 @@ public class UpdateName {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getPhone() {
@@ -33,6 +42,7 @@ public class UpdateName {
     public String toString() {
         return "UpdateName{" +
                 "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
                 '}';

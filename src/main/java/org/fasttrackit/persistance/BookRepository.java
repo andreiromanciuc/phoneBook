@@ -16,26 +16,29 @@ import java.util.List;
 public class BookRepository {
 
     public void createName(CreateNewName createNewName) throws IOException, SQLException {
-        String sql = "INSERT INTO book (name, phone_numbers, address) VALUES (?,?,?)";
+        String sql = "INSERT INTO book (name, surname, phone_numbers, address) VALUES (?,?,?,?)";
 
         try (Connection connection = DatabaseConfiguration.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
 
             preparedStatement.setString(1, createNewName.getName());
-            preparedStatement.setString(2, createNewName.getPhone());
-            preparedStatement.setString(3, createNewName.getAddress());
+            preparedStatement.setString(2, createNewName.getSurname());
+            preparedStatement.setString(3, createNewName.getPhone());
+            preparedStatement.setString(4, createNewName.getAddress());
             preparedStatement.executeUpdate();
         }
     }
 
     public void updateName(long id, UpdateName updateName) throws SQLException, IOException {
-        String slq = "UPDATE book SET phone_numbers = ?, address = ? WHERE id = ?";
+        String slq = "UPDATE book SET name = ?, surname = ?, phone_numbers = ?, address = ? WHERE id = ?";
 
         try (Connection connection = DatabaseConfiguration.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(slq);) {
-            preparedStatement.setString(1, updateName.getPhone());
-            preparedStatement.setString(2, updateName.getAddress());
-            preparedStatement.setLong(3, id);
+            preparedStatement.setString(1, updateName.getName());
+            preparedStatement.setString(2, updateName.getSurname());
+            preparedStatement.setString(3, updateName.getPhone());
+            preparedStatement.setString(4, updateName.getAddress());
+            preparedStatement.setLong(5, id);
             preparedStatement.executeUpdate();
         }
     }
@@ -51,7 +54,7 @@ public class BookRepository {
     }
 
     public List<Book> getNames() throws IOException, SQLException {
-        String sql = "SELECT id, name, phone_numbers, address FROM book";
+        String sql = "SELECT id, name, surname, phone_numbers, address FROM book";
 
         try (Connection connection = DatabaseConfiguration.getConnection();
              Statement statement = connection.createStatement();
@@ -63,6 +66,7 @@ public class BookRepository {
                 Book book = new Book();
                 book.setId(resultSet.getLong("id"));
                 book.setName(resultSet.getString("name"));
+                book.setName(resultSet.getString("surname"));
                 book.setPhone(resultSet.getString("phone_numbers"));
                 book.setAddress(resultSet.getString("address"));
                 names.add(book);

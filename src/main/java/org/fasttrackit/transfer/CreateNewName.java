@@ -2,6 +2,7 @@ package org.fasttrackit.transfer;
 
 public class CreateNewName {
     private String name;
+    private String surname;
     private String phone;
     private String address;
 
@@ -11,6 +12,14 @@ public class CreateNewName {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getPhone() {
@@ -30,10 +39,10 @@ public class CreateNewName {
     }
 
     @Override
-    public String
-    toString() {
-        return "CreateNameRequest{" +
+    public String toString() {
+        return "CreateNewName{" +
                 "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
                 '}';
