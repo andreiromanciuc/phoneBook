@@ -3,6 +3,7 @@ package org.fasttrackit.service;
 import org.fasttrackit.domain.Book;
 import org.fasttrackit.persistance.BookRepository;
 import org.fasttrackit.transfer.CreateNewName;
+import org.fasttrackit.transfer.DeleteNames;
 import org.fasttrackit.transfer.UpdateName;
 
 import java.io.IOException;
@@ -29,8 +30,23 @@ public class BookService {
         bookRepository.delete(id);
     }
 
+    public void deleteWhereAddressIsNull(DeleteNames deleteNames) throws IOException, SQLException {
+        System.out.println("Deleting address ");
+        bookRepository.deleteWhereAddressIsNull(deleteNames);
+    }
+
     public List<Book> getNames() throws IOException, SQLException {
         System.out.println("Reading names ");
         return bookRepository.getNames();
+    }
+
+    public List<Book> getContactsByFirstName() throws IOException, SQLException {
+        System.out.println("Reading contacts by firstName ");
+        return bookRepository.getContactsByFirstName();
+    }
+
+    public List<Book> getContactsByLastName() throws IOException, SQLException {
+        System.out.println("Reading contacts by lastName");
+        return bookRepository.getContactsByLastName();
     }
 }

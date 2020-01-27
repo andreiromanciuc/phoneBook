@@ -1,19 +1,10 @@
-package org.fasttrackit.domain;
+package org.fasttrackit.transfer;
 
-public class Book {
-    private long id;
+public class DeleteNames {
     private String firstName;
     private String lastName;
     private String phone;
     private String address;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -49,9 +40,8 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", name='" + firstName + '\'' +
+        return "CreateNewName{" +
+                "name='" + firstName + '\'' +
                 ", surname='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
