@@ -1,6 +1,7 @@
 package org.fasttrackit.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.fasttrackit.config.ObjectMapperConfiguration;
 import org.fasttrackit.service.BookService;
 import org.fasttrackit.transfer.CreateNewName;
 
@@ -19,12 +20,22 @@ public class NameServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-         CreateNewName createNewName = new ObjectMapper().readValue(req.getReader(), CreateNewName.class);
+         CreateNewName createNewName = ObjectMapperConfiguration.objectMapper
+                 .readValue(req.getReader(), CreateNewName.class);
 
         try {
             bookService.createName(createNewName);
         } catch (SQLException e) {
             resp.sendError(500, "Internal server error: "+ e.getMessage());
+        }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try{
+            bookService.getNames();
+        } catch (SQLException e) {
+            resp.sendError(500, "Internal server error: "+e.getMessage());
         }
     }
 }
