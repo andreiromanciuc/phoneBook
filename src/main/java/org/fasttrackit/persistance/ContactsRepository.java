@@ -10,9 +10,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookRepository {
+public class ContactsRepository {
 
-    public void createName(CreateNewName createNewName) throws IOException, SQLException {
+    public void createName(CreateNewName createNewName) throws IOException, SQLException, ClassNotFoundException {
         String sql = "INSERT INTO book (first_name, last_name, phone_numbers, address) VALUES (?,?,?,?)";
 
         try (Connection connection = DatabaseConfiguration.getConnection();
@@ -26,7 +26,7 @@ public class BookRepository {
         }
     }
 
-    public void updateName(long id, UpdateName updateName) throws SQLException, IOException {
+    public void updateName(long id, UpdateName updateName) throws SQLException, IOException, ClassNotFoundException {
         String slq = "UPDATE book SET first_name = ?, last_name = ?, phone_numbers = ?, address = ? WHERE id = ?";
 
         try (Connection connection = DatabaseConfiguration.getConnection();
@@ -40,7 +40,7 @@ public class BookRepository {
         }
     }
 
-    public void delete(long id) throws SQLException, IOException {
+    public void delete(long id) throws SQLException, IOException, ClassNotFoundException {
         String sql = "DELETE FROM book WHERE id = ?";
 
         try (Connection connection = DatabaseConfiguration.getConnection();
@@ -50,7 +50,7 @@ public class BookRepository {
         }
     }
 
-    public void deleteWhereAddressIsNull (DeleteNames deleteNames) throws IOException, SQLException {
+    public void deleteWhereAddressIsNull (DeleteNames deleteNames) throws IOException, SQLException, ClassNotFoundException {
         String sql = "DELETE FROM book WHERE address IS NULL";
 
        try (Connection connection = DatabaseConfiguration.getConnection()){
@@ -60,7 +60,7 @@ public class BookRepository {
 
     }
 
-    public List<Book> getNames() throws IOException, SQLException {
+    public List<Book> getNames() throws IOException, SQLException, ClassNotFoundException {
         String sql = "SELECT id, first_name, last_name, phone_numbers, address FROM book";
 
         try (Connection connection = DatabaseConfiguration.getConnection();
@@ -82,7 +82,7 @@ public class BookRepository {
         }
     }
 
-    public List<Book> getContactsByFirstName() throws IOException, SQLException {
+    public List<Book> getContactsByFirstName() throws IOException, SQLException, ClassNotFoundException {
         String sql = "SELECT first_name FROM book";
 
         try (Connection connection = DatabaseConfiguration.getConnection();
@@ -99,7 +99,7 @@ public class BookRepository {
         }
     }
 
-    public List<Book> getContactsByLastName() throws SQLException, IOException {
+    public List<Book> getContactsByLastName() throws SQLException, IOException, ClassNotFoundException {
         String sql = "SELECT last_name FROM book";
 
         try (Connection connection = DatabaseConfiguration.getConnection();

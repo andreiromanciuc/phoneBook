@@ -1,7 +1,7 @@
 package org.fasttrackit;
 
 
-import org.fasttrackit.persistance.BookRepository;
+import org.fasttrackit.persistance.ContactsRepository;
 import org.fasttrackit.transfer.DeleteNames;
 
 import java.io.IOException;
@@ -9,12 +9,12 @@ import java.sql.SQLException;
 
 public class App
 {
-    public static void main( String[] args ) throws IOException, SQLException {
+    public static void main( String[] args ) throws IOException, SQLException, ClassNotFoundException {
 
         DeleteNames deleteNames = new DeleteNames();
 
 
-        BookRepository bookRepository = new BookRepository();
+        ContactsRepository bookRepository = new ContactsRepository();
         bookRepository.deleteWhereAddressIsNull(deleteNames);
 
 
