@@ -1,10 +1,10 @@
 package org.fasttrackit.service;
 
-import org.fasttrackit.domain.Book;
+import org.fasttrackit.domain.Contacts;
 import org.fasttrackit.persistance.ContactsRepository;
-import org.fasttrackit.transfer.CreateNewName;
-import org.fasttrackit.transfer.DeleteNames;
-import org.fasttrackit.transfer.UpdateName;
+import org.fasttrackit.transfer.CreateContact;
+import org.fasttrackit.transfer.DeleteContact;
+import org.fasttrackit.transfer.UpdateContact;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -14,38 +14,38 @@ public class BookService {
 
     private ContactsRepository bookRepository = new ContactsRepository();
 
-    public void createName(CreateNewName createNewName) throws IOException, SQLException, ClassNotFoundException {
-        System.out.println("Creating new name: "+ createNewName);
+    public void createContact(CreateContact createContact) throws IOException, SQLException, ClassNotFoundException {
+        System.out.println("Creating new name: "+ createContact);
 
-        bookRepository.createName(createNewName);
+        bookRepository.createName(createContact);
     }
 
-    public void updateName(long id, UpdateName updateName) throws IOException, SQLException, ClassNotFoundException {
-        System.out.println("Updating task "+ id + ": "+updateName);
-        bookRepository.updateName(id, updateName);
+    public void updateContact(long id, UpdateContact updateContact) throws IOException, SQLException, ClassNotFoundException {
+        System.out.println("Updating task "+ id + ": "+ updateContact);
+        bookRepository.updateName(id, updateContact);
     }
 
-    public void deleteName(long id) throws IOException, SQLException, ClassNotFoundException {
+    public void deleteContact(long id) throws IOException, SQLException, ClassNotFoundException {
         System.out.println("Deleting "+id);
-        bookRepository.delete(id);
+        bookRepository.deleteContact(id);
     }
 
-    public void deleteWhereAddressIsNull(DeleteNames deleteNames) throws IOException, SQLException, ClassNotFoundException {
+    public void deleteWhereAddressIsNull(DeleteContact deleteContact) throws IOException, SQLException, ClassNotFoundException {
         System.out.println("Deleting address ");
-        bookRepository.deleteWhereAddressIsNull(deleteNames);
+        bookRepository.deleteWhereAddressIsNull(deleteContact);
     }
 
-    public List<Book> getNames() throws IOException, SQLException, ClassNotFoundException {
+    public List<Contacts> getContacts() throws IOException, SQLException, ClassNotFoundException {
         System.out.println("Reading names ");
         return bookRepository.getNames();
     }
 
-    public List<Book> getContactsByFirstName() throws IOException, SQLException, ClassNotFoundException {
+    public List<Contacts> getContactsByFirstName() throws IOException, SQLException, ClassNotFoundException {
         System.out.println("Reading contacts by firstName ");
         return bookRepository.getContactsByFirstName();
     }
 
-    public List<Book> getContactsByLastName() throws IOException, SQLException, ClassNotFoundException {
+    public List<Contacts> getContactsByLastName() throws IOException, SQLException, ClassNotFoundException {
         System.out.println("Reading contacts by lastName");
         return bookRepository.getContactsByLastName();
     }

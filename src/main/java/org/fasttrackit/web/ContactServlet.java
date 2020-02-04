@@ -1,12 +1,10 @@
 package org.fasttrackit.web;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.fasttrackit.config.ObjectMapperConfiguration;
-import org.fasttrackit.domain.Book;
+import org.fasttrackit.domain.Contacts;
 import org.fasttrackit.service.BookService;
-import org.fasttrackit.transfer.CreateNewName;
-import org.fasttrackit.transfer.DeleteNames;
-import org.fasttrackit.transfer.UpdateName;
+import org.fasttrackit.transfer.CreateContact;
+import org.fasttrackit.transfer.UpdateContact;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,11 +22,11 @@ public class ContactServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-         CreateNewName createNewName = ObjectMapperConfiguration.objectMapper
-                 .readValue(req.getReader(), CreateNewName.class);
+         CreateContact createContact = ObjectMapperConfiguration.objectMapper
+                 .readValue(req.getReader(), CreateContact.class);
 
         try {
-            bookService.createName(createNewName);
+            bookService.createContact(createContact);
         } catch (SQLException | ClassNotFoundException e) {
             resp.sendError(500, "Internal server error: "+ e.getMessage());
         }
@@ -41,9 +39,9 @@ public class ContactServlet extends HttpServlet {
 
         if (firstName!=null){
             try{
-                List<Book> names =bookService.getContactsByFirstName();
+                List<Contacts> contacts =bookService.getContactsByFirstName();
 
-                String response =ObjectMapperConfiguration.objectMapper.writeValueAsString(names);
+                String response =ObjectMapperConfiguration.objectMapper.writeValueAsString(contacts);
                 resp.getWriter().print(response);
 
             } catch (SQLException | ClassNotFoundException e) {
@@ -51,18 +49,18 @@ public class ContactServlet extends HttpServlet {
             }
         } else if (lastName != null) {
             try{
-                List<Book> names =bookService.getContactsByLastName();
+                List<Contacts> contacts =bookService.getContactsByLastName();
 
-                String response =ObjectMapperConfiguration.objectMapper.writeValueAsString(names);
+                String response =ObjectMapperConfiguration.objectMapper.writeValueAsString(contacts);
                 resp.getWriter().print(response);
 
             } catch (SQLException | ClassNotFoundException e) {
                 resp.sendError(500, "Internal server error: "+e.getMessage());
             }
         } else try{
-            List<Book> names =bookService.getNames();
+            List<Contacts> contacts =bookService.getContacts();
 
-            String response =ObjectMapperConfiguration.objectMapper.writeValueAsString(names);
+            String response =ObjectMapperConfiguration.objectMapper.writeValueAsString(contacts);
             resp.getWriter().print(response);
 
         } catch (SQLException | ClassNotFoundException e) {
@@ -76,7 +74,7 @@ public class ContactServlet extends HttpServlet {
         String id = req.getParameter("id");
         if (id != null) {
             try {
-                bookService.deleteName(Long.parseLong(id));
+                bookService.deleteContact(Long.parseLong(id));
 
             } catch (SQLException | ClassNotFoundException e) {
                 resp.sendError(500, "Internal Server Error: " + e.getMessage());
@@ -95,10 +93,10 @@ public class ContactServlet extends HttpServlet {
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
 
-        UpdateName updateName = ObjectMapperConfiguration.objectMapper.readValue(req.getReader(), UpdateName.class);
+        UpdateContact updateContact = ObjectMapperConfiguration.objectMapper.readValue(req.getReader(), UpdateContact.class);
 
         try {
-            bookService.updateName(Long.parseLong(id), updateName);
+            bookService.updateContact(Long.parseLong(id), updateContact);
         } catch (SQLException | ClassNotFoundException e) {
             resp.sendError(500, "Internal Server Error: "+e.getMessage());
         }

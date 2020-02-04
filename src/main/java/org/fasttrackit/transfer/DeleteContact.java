@@ -1,6 +1,6 @@
 package org.fasttrackit.transfer;
 
-public class CreateNewName {
+public class DeleteContact {
     private String firstName;
     private String lastName;
     private String phone;

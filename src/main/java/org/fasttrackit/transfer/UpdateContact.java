@@ -1,6 +1,6 @@
 package org.fasttrackit.transfer;
 
-public class DeleteNames {
+public class UpdateContact {
     private String firstName;
     private String lastName;
     private String phone;
@@ -40,7 +40,7 @@ public class DeleteNames {
 
     @Override
     public String toString() {
-        return "CreateNewName{" +
+        return "UpdateName{" +
                 "name='" + firstName + '\'' +
                 ", surname='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +
