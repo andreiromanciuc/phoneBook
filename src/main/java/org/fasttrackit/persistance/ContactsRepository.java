@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ContactsRepository {
 
-    public void createName(CreateContact createContact) throws IOException, SQLException, ClassNotFoundException {
+    public void createContact(CreateContact createContact) throws IOException, SQLException, ClassNotFoundException {
         String sql = "INSERT INTO book (first_name, last_name, phone_numbers, address) VALUES (?,?,?,?)";
 
         try (Connection connection = DatabaseConfiguration.getConnection();
@@ -26,7 +26,7 @@ public class ContactsRepository {
         }
     }
 
-    public void updateName(long id, UpdateContact updateContact) throws SQLException, IOException, ClassNotFoundException {
+    public void updateContact(long id, UpdateContact updateContact) throws SQLException, IOException, ClassNotFoundException {
         String slq = "UPDATE book SET first_name = ?, last_name = ?, phone_numbers = ?, address = ? WHERE id = ?";
 
         try (Connection connection = DatabaseConfiguration.getConnection();
@@ -60,7 +60,7 @@ public class ContactsRepository {
 
     }
 
-    public List<Contacts> getNames() throws IOException, SQLException, ClassNotFoundException {
+    public List<Contacts> getContacts() throws IOException, SQLException, ClassNotFoundException {
         String sql = "SELECT id, first_name, last_name, phone_numbers, address FROM book";
 
         try (Connection connection = DatabaseConfiguration.getConnection();

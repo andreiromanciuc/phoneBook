@@ -17,12 +17,12 @@ public class BookService {
     public void createContact(CreateContact createContact) throws IOException, SQLException, ClassNotFoundException {
         System.out.println("Creating new name: "+ createContact);
 
-        bookRepository.createName(createContact);
+        bookRepository.createContact(createContact);
     }
 
     public void updateContact(long id, UpdateContact updateContact) throws IOException, SQLException, ClassNotFoundException {
         System.out.println("Updating task "+ id + ": "+ updateContact);
-        bookRepository.updateName(id, updateContact);
+        bookRepository.updateContact(id, updateContact);
     }
 
     public void deleteContact(long id) throws IOException, SQLException, ClassNotFoundException {
@@ -37,7 +37,7 @@ public class BookService {
 
     public List<Contacts> getContacts() throws IOException, SQLException, ClassNotFoundException {
         System.out.println("Reading names ");
-        return bookRepository.getNames();
+        return bookRepository.getContacts();
     }
 
     public List<Contacts> getContactsByFirstName() throws IOException, SQLException, ClassNotFoundException {
