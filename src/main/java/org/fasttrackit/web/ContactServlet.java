@@ -1,9 +1,11 @@
 package org.fasttrackit.web;
 
 import org.fasttrackit.config.ObjectMapperConfiguration;
-import org.fasttrackit.domain.Contacts;
+import org.fasttrackit.domain.Contact;
 import org.fasttrackit.service.BookService;
 import org.fasttrackit.transfer.CreateContact;
+import org.fasttrackit.transfer.GetByFirstName;
+import org.fasttrackit.transfer.GetByLastName;
 import org.fasttrackit.transfer.UpdateContact;
 
 import javax.servlet.ServletException;
@@ -15,62 +17,66 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet ("/names")
+@WebServlet("/names")
 public class ContactServlet extends HttpServlet {
 
     private BookService bookService = new BookService();
 
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-         CreateContact createContact = ObjectMapperConfiguration.objectMapper
-                 .readValue(req.getReader(), CreateContact.class);
+        setAccessControlHeaders(resp);
+        CreateContact createContact = ObjectMapperConfiguration.objectMapper
+                .readValue(req.getReader(), CreateContact.class);
 
         try {
             bookService.createContact(createContact);
         } catch (SQLException | ClassNotFoundException e) {
-            resp.sendError(500, "Internal server error: "+ e.getMessage());
+            resp.sendError(500, "Internal server error: " + e.getMessage());
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setAccessControlHeaders(resp);
+
         String firstName = req.getParameter("firstName");
         String lastName = req.getParameter("lastName");
 
-        if (firstName!=null){
-            try{
-                List<Contacts> contacts =bookService.getContactsByFirstName();
+        try {
 
-                String response =ObjectMapperConfiguration.objectMapper.writeValueAsString(contacts);
+            if (firstName != null) {
+                GetByFirstName getByFirstName = ObjectMapperConfiguration.objectMapper
+                        .readValue(req.getReader(), GetByFirstName.class);
+
+
+                List<Contact> contactsByFirstName = bookService.getContactsByFirstName(getByFirstName);
+
+                String responseFirstName = ObjectMapperConfiguration.objectMapper.writeValueAsString(contactsByFirstName);
+                resp.getWriter().print(responseFirstName);
+            } else if (lastName != null) {
+                GetByLastName getByLastName = new GetByLastName();
+                List<Contact> contactsByLastName = bookService.getContactsByLastName(getByLastName);
+
+                String responseLastName = ObjectMapperConfiguration.objectMapper.writeValueAsString(contactsByLastName);
+                resp.getWriter().print(responseLastName);
+            } else {
+
+                List<Contact> contacts = bookService.getContacts();
+                String response = ObjectMapperConfiguration.objectMapper.writeValueAsString(contacts);
                 resp.getWriter().print(response);
-
-            } catch (SQLException | ClassNotFoundException e) {
-                resp.sendError(500, "Internal server error: "+e.getMessage());
             }
-        } else if (lastName != null) {
-            try{
-                List<Contacts> contacts =bookService.getContactsByLastName();
-
-                String response =ObjectMapperConfiguration.objectMapper.writeValueAsString(contacts);
-                resp.getWriter().print(response);
-
-            } catch (SQLException | ClassNotFoundException e) {
-                resp.sendError(500, "Internal server error: "+e.getMessage());
-            }
-        } else try{
-            List<Contacts> contacts =bookService.getContacts();
-
-            String response =ObjectMapperConfiguration.objectMapper.writeValueAsString(contacts);
-            resp.getWriter().print(response);
 
         } catch (SQLException | ClassNotFoundException e) {
-            resp.sendError(500, "Internal server error: "+e.getMessage());
+            resp.sendError(500, "Internal server error: " + e.getMessage());
         }
+
     }
+
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        setAccessControlHeaders(resp);
         String id = req.getParameter("id");
         if (id != null) {
             try {
@@ -88,9 +94,9 @@ public class ContactServlet extends HttpServlet {
     }
 
 
-
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setAccessControlHeaders(resp);
         String id = req.getParameter("id");
 
         UpdateContact updateContact = ObjectMapperConfiguration.objectMapper.readValue(req.getReader(), UpdateContact.class);
@@ -98,8 +104,20 @@ public class ContactServlet extends HttpServlet {
         try {
             bookService.updateContact(Long.parseLong(id), updateContact);
         } catch (SQLException | ClassNotFoundException e) {
-            resp.sendError(500, "Internal Server Error: "+e.getMessage());
+            resp.sendError(500, "Internal Server Error: " + e.getMessage());
         }
+
+    }
+
+    @Override
+    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setAccessControlHeaders(resp);
+    }
+
+    private void setAccessControlHeaders(HttpServletResponse resp) {
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        resp.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        resp.setHeader("Access-Control-Allow-Headers", "content-type");
 
     }
 }

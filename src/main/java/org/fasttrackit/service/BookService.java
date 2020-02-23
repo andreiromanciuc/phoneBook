@@ -1,10 +1,8 @@
 package org.fasttrackit.service;
 
-import org.fasttrackit.domain.Contacts;
+import org.fasttrackit.domain.Contact;
 import org.fasttrackit.persistance.ContactsRepository;
-import org.fasttrackit.transfer.CreateContact;
-import org.fasttrackit.transfer.DeleteContact;
-import org.fasttrackit.transfer.UpdateContact;
+import org.fasttrackit.transfer.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -35,18 +33,19 @@ public class BookService {
         bookRepository.deleteWhereAddressIsNull(deleteContact);
     }
 
-    public List<Contacts> getContacts() throws IOException, SQLException, ClassNotFoundException {
+    public List<Contact> getContacts() throws IOException, SQLException, ClassNotFoundException {
         System.out.println("Reading names ");
         return bookRepository.getContacts();
     }
 
-    public List<Contacts> getContactsByFirstName() throws IOException, SQLException, ClassNotFoundException {
+    public List<Contact> getContactsByFirstName(GetByFirstName getByFirstName) throws IOException, SQLException, ClassNotFoundException {
         System.out.println("Reading contacts by firstName ");
-        return bookRepository.getContactsByFirstName();
+        return bookRepository.getContactsByFirstName(getByFirstName);
     }
 
-    public List<Contacts> getContactsByLastName() throws IOException, SQLException, ClassNotFoundException {
+    public List<Contact> getContactsByLastName(GetByLastName getByLastName) throws IOException, SQLException, ClassNotFoundException {
         System.out.println("Reading contacts by lastName");
-        return bookRepository.getContactsByLastName();
+        return bookRepository.getContactsByLastName(getByLastName);
     }
+
 }
