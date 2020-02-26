@@ -79,18 +79,18 @@ public class ContactsRepository {
         }
     }
 
-    public List<Contact> getContactsByFirstName(GetByFirstName getByFirstName) throws IOException, SQLException, ClassNotFoundException {
+    public List<Contact> getContactsByFirstName(GetContacts getContacts) throws IOException, SQLException, ClassNotFoundException {
         String sql = "SELECT * FROM book WHERE first_name LIKE ?";
 
         try (Connection connection = DatabaseConfiguration.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-             ResultSet resultSet = preparedStatement.executeQuery(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setString(1, getByFirstName.getFirstName());
-            preparedStatement.executeUpdate();
+            preparedStatement.setString(1, getContacts.getFirstName());
+            preparedStatement.executeQuery();
+
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             List<Contact> contacts = new ArrayList<>();
-
             while (resultSet.next()) {
                 Contact book = new Contact();
                 book.setFirstName(resultSet.getString("first_name"));
@@ -103,21 +103,28 @@ public class ContactsRepository {
         }
     }
 
-    public List<Contact> getContactsByLastName(GetByLastName getByLastName) throws SQLException, IOException, ClassNotFoundException {
+    public List<Contact> getContactsByLastName(GetContacts getContactsByLastName) throws SQLException, IOException, ClassNotFoundException {
         String sql = "SELECT * FROM book WHERE last_name LIKE ?";
 
         try (Connection connection = DatabaseConfiguration.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, getContactsByLastName.getLastName());
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             List<Contact> contacts = new ArrayList<>();
             while (resultSet.next()) {
                 Contact book = new Contact();
+                book.setFirstName(resultSet.getString("first_name"));
                 book.setLastName(resultSet.getString("last_name"));
+                book.setPhone(resultSet.getString("phone_numbers"));
+                book.setAddress(resultSet.getString("address"));
                 contacts.add(book);
             }
             return contacts;
         }
 
     }
+
+
 }

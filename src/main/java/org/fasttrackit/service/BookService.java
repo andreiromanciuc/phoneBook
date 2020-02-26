@@ -38,14 +38,15 @@ public class BookService {
         return bookRepository.getContacts();
     }
 
-    public List<Contact> getContactsByFirstName(GetByFirstName getByFirstName) throws IOException, SQLException, ClassNotFoundException {
+    public List<Contact> getContactsByFirstName(GetContacts getContacts) throws IOException, SQLException, ClassNotFoundException {
         System.out.println("Reading contacts by firstName ");
-        return bookRepository.getContactsByFirstName(getByFirstName);
+        return bookRepository.getContactsByFirstName(getContacts);
     }
 
-    public List<Contact> getContactsByLastName(GetByLastName getByLastName) throws IOException, SQLException, ClassNotFoundException {
+    public List<Contact> getContactsByLastName(GetContacts getByLastName) throws IOException, SQLException, ClassNotFoundException {
         System.out.println("Reading contacts by lastName");
         return bookRepository.getContactsByLastName(getByLastName);
     }
+
 
 }

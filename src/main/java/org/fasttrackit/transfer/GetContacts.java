@@ -1,6 +1,6 @@
 package org.fasttrackit.transfer;
 
-public class GetByFirstName {
+public class GetContacts {
     private String firstName;
     private String lastName;
     private String phone;
